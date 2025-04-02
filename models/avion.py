@@ -3,7 +3,6 @@
 #   24 - 03 - 2025
 import time
 from enum import Enum
-from torre_control import TorreControl
 
 class Prioridad(Enum):
     EMERGENCIA = 1    # Emergencia: Vuelos con problemas críticos
@@ -21,7 +20,7 @@ class Destino(Enum):
 MAX_COMBUSTIBLE = 203_057
 
 class Avion:
-    def __init__(self, id, modelo, torre: TorreControl, prioridad, combustible=MAX_COMBUSTIBLE):
+    def __init__(self, id, modelo, prioridad, combustible=MAX_COMBUSTIBLE):
         """
         Inicializa el objeto con los atributos especificados
 
@@ -33,9 +32,9 @@ class Avion:
         """
         self.id = id
         self.modelo = modelo
-        self.torre_control = torre
         if not isinstance(prioridad, Prioridad):
-            raise ValueError("La prioridad debe ser un valor del ENUM")
+            self.prioridad = Prioridad.NORMAL
+            raise ValueError("La prioridad debe ser un valor del ENUM. Por defecto le ponemos en normal.")
         self.prioridad = prioridad
         self.combustible = min(combustible, MAX_COMBUSTIBLE)
         self.is_volando = False  # Estado inicial en tierra
@@ -103,3 +102,9 @@ class Avion:
         if not isinstance(prioridad, Prioridad):
             raise ValueError("La prioridad debe ser un valor del ENUM")
         self.prioridad = prioridad
+
+    def solicitar_despegue(self):
+        pass
+
+    def soliticar_aterrizaje(self):
+        pass
